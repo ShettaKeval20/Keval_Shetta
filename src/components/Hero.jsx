@@ -2,6 +2,8 @@ import React, { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { motion } from "framer-motion";
+import { useProgress, Html } from "@react-three/drei";
+
 
 // === 3D MODEL ===
 function GamingPCModel() {
@@ -105,6 +107,14 @@ const HeroSection = () => {
           <a href="mailto:kevalshetta@gmail.com" className="hover:text-white transition">Email</a>
           <a href="https://www.kevalshetta.com" target="_blank" className="hover:text-white transition">LinkedIn</a>
         </div>
+
+        {/* Scroll Down Icon */}
+        <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+  <span className="material-icons text-3xl">expand_more</span>
+  <span className="text-xs mt-1">Scroll Down</span>
+</div>
+
+        
       </div>
     </section>
   );
