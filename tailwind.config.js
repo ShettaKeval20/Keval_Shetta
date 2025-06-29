@@ -2,8 +2,16 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      blur: {
+        xs: "2px",
+        sm: "4px",
+        md: "6px",
+        xl: "12px",
+      },
       animation: {
         'fade-down': 'fadeDown 0.3s ease-out',
+        'pulse-slow': 'pulse 6s ease-in-out infinite',
+        'pulse-slower': 'pulse 10s ease-in-out infinite',
       },
       keyframes: {
         fadeDown: {
