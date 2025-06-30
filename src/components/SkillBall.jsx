@@ -4,8 +4,7 @@ import { TextureLoader } from "three";
 import { Decal } from "@react-three/drei";
 import * as THREE from "three";
 
-// Tweakable values
-const AUTO_ROTATE_SPEED = 0.005;
+// 👇 Tweak as needed
 const MOUSE_ROTATE_SPEED = 0.003;
 const RETURN_SPEED = 0.1;
 
@@ -25,8 +24,9 @@ export default function SkillBall({ imgUrl, position }) {
       mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, targetX, RETURN_SPEED);
       mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, targetY, RETURN_SPEED);
     } else {
-      mesh.rotation.x += AUTO_ROTATE_SPEED * 0.5;
-      mesh.rotation.y += AUTO_ROTATE_SPEED;
+      // 🔁 Return to perfect front view
+      mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, 0, RETURN_SPEED);
+      mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, 0, RETURN_SPEED);
     }
   });
 
@@ -45,16 +45,16 @@ export default function SkillBall({ imgUrl, position }) {
       scale={hovered ? 1.1 : 1}
       cursor="pointer"
     >
-      {/* 🟣 BALL */}
+      {/* 🔵 Ball base */}
       <icosahedronGeometry args={[1, 1]} />
       <meshStandardMaterial color="#ffffff" flatShading />
 
-      {/* 🔵 IMAGE Decal perfectly centered on ball front */}
+      {/* 🟣 Image on front face */}
       <Decal
         map={texture}
-        position={[0, 0, 0.98]}   // Centered on front face of ball
+        position={[0, 0, 0.98]} // Right on front
         rotation={[0, 0, 0]}
-        scale={1.5}                // You can make this 0.5 or 0.4 to shrink
+        scale={1.5}
         flatShading
       />
     </mesh>
