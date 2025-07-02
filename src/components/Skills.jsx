@@ -1,97 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Html, Environment } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import SkillBall from "./SkillBall";
 
-// ✅ Grouped skill categories with aligned positions
-const skillCategories = [
-  {
-    title: "Website Development",
-    position: [-7.5, 5, 0],
-    skills: [
-      { name: "React", img: "/icons/React.png", experience: "5 years", projects: 12, confidence: 5},
-      { name: "HTML5", img: "/icons/HTML5.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "CSS3", img: "/icons/CSS3.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "Javascript", img: "/icons/Javascript.webp",experience: "5 years", projects: 12, confidence: 5 },
-    ],
-  },
-  {
-    title: "App Development",
-    position: [7.5, 5, 0],
-    skills: [
-      { name: "Kotlin", img: "/public/icons/Kotlin.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "Firebase", img: "/public/icons/Jetpack.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "MySQL", img: "/public/icons/JAVA.svg",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "Jetpack", img: "/public/icons/Swift.png",experience: "5 years", projects: 12, confidence: 5 },
-    ],
-  },
-  {
-    title: "Backend Development",
-    position: [-7.5, -1, 0],
-    skills: [
-      { name: "Figma", img: "/public/icons/Node.png" },
-      { name: "Figma", img: "/public/icons/Mysql.png" },
-      { name: "Figma", img: "/public/icons/Firebase.png" },
-      { name: "Jetpack", img: "/public/icons/Python.png" },
-    ],
-  },
-  {
-    title: "Tools",
-    position: [7.5, -1, 0],
-    skills: [
-      { name: "Jetpack", img: "/public/icons/Figma.png" },
-      { name: "Jetpack", img: "/public/icons/Adobe.png" },
-      { name: "Jetpack", img: "/public/icons/Git.png" },
-      { name: "Jetpack", img: "/public/icons/Docker.png" },
-    ],
-  },
+// ✅ All skills list
+const skills = [
+  // Webiste Development Skills
+  { name: "React", img: "/public/icons/React.png", experience: "2 years", Projects: 5, confidence: 4 },
+  { name: "HTML5", img: "/public/icons/HTML5.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "CSS3", img: "/public/icons/CSS3.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Javascript", img: "/public/icons/Javascript.webp", experience: "2 years", Projects: 5, confidence: 4  },
+  
+  // Mobile Development Skills
+  { name: "JAVA", img: "/public/icons/JAVA.svg", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Kotlin", img: "/public/icons/Kotlin.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Jetpack", img: "/public/icons/Jetpack.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Swift", img: "/public/icons/Swift.png", experience: "2 years", Projects: 5, confidence: 4  },
+  
+  // Backend Skills
+  { name: "Mysql", img: "/public/icons/Mysql.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Figma", img: "/public/icons/Node.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Firebase", img: "/public/icons/Firebase.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Python", img: "/public/icons/Python.png", experience: "2 years", Projects: 5, confidence: 4  },
+
+  // Design Skills
+  { name: "Figma", img: "/public/icons/Figma.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Adobe", img: "/public/icons/Adobe.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Docker", img: "/public/icons/Docker.png", experience: "2 years", Projects: 5, confidence: 4  },
+  { name: "Git", img: "/public/icons/Git.png", experience: "2 years", Projects: 5, confidence: 4  },
 ];
 
+const getRowStructure = (width) => {
+  if (width < 640) return [3, 3, 3, 3];     // Mobile
+  if (width < 1024) return [4, 4, 4];       // Tablet
+  return [7, 5, 4];                            // Laptop
+};
+
 export default function Skills() {
-  const spacing = 2.5; // horizontal distance between skill balls
+  const [rows, setRows] = useState(getRowStructure(window.innerWidth));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setRows(getRowStructure(window.innerWidth));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const spacing = 2.5;
+  const rowHeight = 2.5;
+
+const generatePositions = () => {
+  const positions = [];
+  let skillIndex = 0;
+
+  const totalRows = rows.length;
+  const totalHeight = (totalRows - 1) * rowHeight;
+
+  // ✅ Responsive Y Offset
+  let yOffset = 0;
+  if (window.innerWidth < 640) {
+    yOffset = 2.5; // Mobile
+  } else if (window.innerWidth < 1024) {
+    yOffset = 1.5; // Tablet
+  } else {
+    yOffset = 0.5; // Laptop
+  }
+
+  const startY = totalHeight / 2.5 + yOffset;
+
+  rows.forEach((itemsInRow, rowIndex) => {
+    const offsetX = ((itemsInRow - 1) * spacing) / 2;
+    const y = startY - rowIndex * rowHeight;
+
+    for (let i = 0; i < itemsInRow; i++) {
+      if (skillIndex >= skills.length) break;
+      const x = i * spacing - offsetX;
+      positions.push([x, y, 0]);
+      skillIndex++;
+    }
+  });
+
+  return positions;
+};
+
+  const positions = generatePositions();
 
   return (
     <section id="skills" className="h-screen bg-[#0f172a] text-white">
-      <h2 className="text-center text-3xl font-bold py-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-indigo-400">
-        🚀 My Technical Skills
+      <h2 className="text-center text-3xl font-bold py-2 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-indigo-400">
+        🚀 Tech Stack - 3D Universe
       </h2>
+      <Canvas camera={{ position: [0, 0, 12], fov: 60 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} />
+        <Environment preset="sunset" />
 
-      <Canvas camera={{ position: [0, 0, 15], fov: 60 }}>
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[1.5, 1.5, 1.5]} />
-        <Environment preset="studio" />
+        {positions.map((pos, index) => (
+  <SkillBall
+    key={index}
+    imgUrl={skills[index].img}
+    position={pos}
+    skill={skills[index]}
+    showHintText={index === 0}
+  />
+))}
 
-        {skillCategories.map((category, index) => {
-          const [groupX, groupY, groupZ] = category.position;
-          const count = category.skills.length;
-          const totalWidth = (count - 1) * spacing;
-
-          return (
-            <group key={index} position={[groupX, groupY, groupZ]}>
-              {/* Category Label */}
-              <Html position={[0, 2.5, 0]} center>
-                <div className="text-lg md:text-xl font-semibold bg-black/70 px-4 py-1 rounded-full shadow backdrop-blur">
-                  {category.title}
-                </div>
-              </Html>
-
-              {/* Skill Balls */}
-              {category.skills.map((skill, i) => {
-                const x = -totalWidth / 2 + i * spacing;
-                return (
-                  <SkillBall
-                    key={i}
-                    imgUrl={skill.img}
-                    position={[x, 0, 0]}
-                    skill={skill}
-                    showPulse={true}
-                    showHintText={index === 0 && i === 0}
-                  />
-                );
-              })}
-            </group>
-          );
-        })}
       </Canvas>
     </section>
   );
