@@ -9,10 +9,10 @@ const skillCategories = [
     title: "Website Development",
     position: [-7.5, 5, 0],
     skills: [
-      { name: "React", img: "/public/icons/React.png", experience: "5 years", projects: 12, confidence: 5},
-      { name: "HTML5", img: "/public/icons/HTML5.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "CSS3", img: "/public/icons/CSS3.png",experience: "5 years", projects: 12, confidence: 5 },
-      { name: "Javascript", img: "/public/icons/Javascript.webp",experience: "5 years", projects: 12, confidence: 5 },
+      { name: "React", img: "/icons/React.png", experience: "5 years", projects: 12, confidence: 5},
+      { name: "HTML5", img: "/icons/HTML5.png",experience: "5 years", projects: 12, confidence: 5 },
+      { name: "CSS3", img: "/icons/CSS3.png",experience: "5 years", projects: 12, confidence: 5 },
+      { name: "Javascript", img: "/icons/Javascript.webp",experience: "5 years", projects: 12, confidence: 5 },
     ],
   },
   {
