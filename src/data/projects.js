@@ -42,7 +42,7 @@ const projects = [
     "Implemented Google OAuth to eliminate password storage and boost sign-up conversion.",
     "Used Retrofit for robust network calls and future API integrations."
   ],
-  architectureDiagram: "/images/buddiesgram-architecture.png" // replace with your diagram path
+  // architectureDiagram: "/images/buddiesgram-architecture.png" // replace with your diagram path
 },
     {
     id: "portfolio",

@@ -55,7 +55,7 @@ export default function SkillBall({ imgUrl, position, skill }) {
           map={texture}
           position={[0, 0, 1]}
           rotation={[0, 0, 0]}
-          scale={1.5}
+          scale={1.3}
           flatShading
         />
       </mesh>
