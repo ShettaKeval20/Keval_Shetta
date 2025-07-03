@@ -83,3 +83,8 @@ html {
 .animate-pulse-slower {
   animation: pulse-slower 8s infinite;
 }
+
+body {
+  @apply bg-[#0f172a]; /* tailwind */
+  margin: 0;
+}

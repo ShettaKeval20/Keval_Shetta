@@ -1,90 +1,138 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars, useGLTF } from "@react-three/drei";
-import { FaLinkedin, FaGithub, FaEnvelope, FaXTwitter } from "react-icons/fa6";
-import * as THREE from "three";
+import { OrbitControls, Stars, useGLTF, Html } from "@react-three/drei";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
-export default function Footer() {
-  const [location, setLocation] = useState({ lat: 0, lon: 0 });
+// Utility: Convert degrees to radians
+const toRad = (deg) => (deg * Math.PI) / 180;
+
+// 3D Earth with marker and popup
+function EarthModel() {
+  const gltf = useGLTF("/models/earth.glb");
+  const [markerPosition, setMarkerPosition] = useState(null);
+
+  const SCALE = 4.5;
+  const EARTH_RADIUS = 1.4 * SCALE;
+  const EARTH_Y_OFFSET = -1.2;
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => {
-        setLocation({ lat: data.latitude, lon: data.longitude });
-      })
-      .catch(() => setLocation({ lat: 0, lon: 0 }));
-  }, []);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const lat = toRad(coords.latitude);
+        const lng = toRad(coords.longitude);
 
-  useEffect(() => {
-    console.log(
-      "%cHey Recruiter! Let’s build amazing things together 🚀",
-      "color: #00FFAA; font-size: 14px;"
+        const x = EARTH_RADIUS * Math.cos(lat) * Math.sin(lng);
+        const y = EARTH_RADIUS * Math.sin(lat) + EARTH_Y_OFFSET; // ✅ offset applied
+        const z = EARTH_RADIUS * Math.cos(lat) * Math.cos(lng);
+
+        setMarkerPosition([x, y, z]);
+      },
+      (err) => {
+        console.warn("Location error:", err.message);
+      }
     );
   }, []);
 
-  return (
-    <footer className="bg-black text-gray-300 px-6 py-12 flex flex-col items-center space-y-4">
-      <div className="w-64 h-64">
-        <Canvas>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[2, 2, 5]} />
-          <Stars radius={100} depth={50} count={5000} factor={4} fade />
-          <Suspense fallback={null}>
-            <Earth location={location} />
-          </Suspense>
-          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-        </Canvas>
-      </div>
+  <mesh rotation={[Math.PI / 2, 0, 0]}>
+  <ringGeometry args={[1.5, 1.7, 64]} />
+  <meshBasicMaterial color="cyan" opacity={0.2} transparent />
+</mesh>
 
-      <div className="flex space-x-6 mt-4">
-        <a href="https://linkedin.com/in/YOUR_LINK" target="_blank" rel="noreferrer">
-          <FaLinkedin size={24} className="hover:text-blue-400 transition" />
-        </a>
-        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">
-          <FaGithub size={24} className="hover:text-gray-100 transition" />
-        </a>
-        <a href="mailto:youremail@example.com">
-          <FaEnvelope size={24} className="hover:text-red-400 transition" />
-        </a>
-        <a href="https://x.com/YOUR_X" target="_blank" rel="noreferrer">
-          <FaXTwitter size={24} className="hover:text-sky-400 transition" />
-        </a>
-      </div>
-
-      <p className="text-xs text-gray-500">Crafted with ❤️ from Earth 🌍</p>
-      <p className="text-xs text-gray-500">© {new Date().getFullYear()} Keval Shetta</p>
-    </footer>
-  );
-}
-
-// ---------------
-// Earth component with pin
-// ---------------
-
-function Earth({ location }) {
-  const earth = useGLTF("/models/earth.glb");
-  const radius = 1; // Adjust if your Earth GLB scale is different
-
-  // Convert lat/lon to XYZ
-  const lat = location.lat;
-  const lon = location.lon;
-
-  const phi = (90 - lat) * (Math.PI / 180);
-  const theta = (lon + 180) * (Math.PI / 180);
-
-  const x = -radius * Math.sin(phi) * Math.cos(theta);
-  const y = radius * Math.cos(phi);
-  const z = radius * Math.sin(phi) * Math.sin(theta);
 
   return (
     <group>
-      <primitive object={earth.scene} scale={2} />
-      {/* User location pin */}
-      <mesh position={[x * 2, y * 2, z * 2]}>
-        <sphereBufferGeometry args={[0.02, 16, 16]} />
-        <meshStandardMaterial color="red" emissive="red" emissiveIntensity={1} />
-      </mesh>
+      {/* Earth Model */}
+      <primitive object={gltf.scene} scale={3.0} position={[0, EARTH_Y_OFFSET, 0]} />
+
+      {/* Marker + Popup*/}
+      {/* {markerPosition && (
+  <>
+    <mesh position={markerPosition}>
+      <sphereGeometry args={[0.07, 32, 32]} />
+      <meshStandardMaterial color="red" emissive="red" emissiveIntensity={0.7} />
+    </mesh>
+    <Html position={[markerPosition[0], markerPosition[1] + 0.2, markerPosition[2]]} center>
+      <div className="animate-bounce text-xs bg-white text-black px-2 py-1 rounded shadow">
+        You are here 🌍
+      </div>
+    </Html>
+  </>
+)} */}
+
     </group>
+  );
+}
+
+
+useGLTF.preload("/models/earth.glb");
+
+// Main Footer Component
+export default function Footer() {
+  return (
+    <footer
+      id="contact"
+      className="relative mt-24 bg-[#0d1117] text-gray-300 px-6 py-16 overflow-hidden z-10"
+    >
+      {/* Top glow line */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[90%] h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-blue-500 blur-sm animate-pulse" />
+
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 z-10 relative">
+        {/* Left - 3D Globe */}
+        <div className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] flex-shrink-0">
+          <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+            <ambientLight intensity={0.7} />
+            <directionalLight position={[5, 5, 5]} />
+            <Stars radius={100} depth={50} count={5000} factor={4} fade />
+            <Suspense fallback={null}>
+              <EarthModel />
+            </Suspense>
+            <OrbitControls enableZoom autoRotate autoRotateSpeed={0.6} />
+          </Canvas>
+        </div>
+
+        {/* Right - Info and Links */}
+        <div className="text-center md:text-left space-y-6 flex-1">
+          <h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">
+            Keval Shetta
+          </h3>
+
+          <p className="text-gray-400 text-base max-w-md mx-auto md:mx-0">
+            Passionate about clean UI, meaningful UX, and scalable tech.
+          </p>
+
+          <div className="flex justify-center md:justify-start gap-6 text-gray-400 text-2xl">
+            <a
+              href="https://github.com/kevalshetta"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-transform hover:scale-110"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://linkedin.com/in/kevalshetta"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-transform hover:scale-110"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="mailto:kevalshetta@gmail.com"
+              className="hover:text-white transition-transform hover:scale-110"
+            >
+              <FaEnvelope />
+            </a>
+          </div>
+
+          <p className="text-xs text-gray-600 pt-4">
+            © {new Date().getFullYear()} Keval Shetta · Built with React & Three.js
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom glow line */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 blur-md opacity-50" />
+    </footer>
   );
 }

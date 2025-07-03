@@ -16,9 +16,10 @@ export default function Projects() {
 
   return (
     <section
-      id="projects"
-      className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] py-20 px-6 text-white"
-    >
+  id="projects"
+  className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] py-20 px-6 text-white"
+>
+
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
@@ -48,7 +49,7 @@ export default function Projects() {
         {filteredProjects.length === 0 ? (
           <p className="text-center text-gray-400">No projects found.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-0">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={index}
