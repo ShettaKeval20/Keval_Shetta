@@ -62,13 +62,15 @@ export default function SkillBall({ imgUrl, position, skill }) {
 
       {/* Tooltip */}
       {hovered && (
-        <Html position={[...position.slice(0, 2), position[2] + 1.5]} center>
-          <div className="text-xs md:text-sm bg-white text-black px-2 py-1 rounded shadow-md">
-            <strong>{skill.name}</strong>
-            <br />
-            {skill.experience}, {skill.projects}+ Projects
-          </div>
-        </Html>
+      <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
+  <div className="bg-white text-black px-4 py-3 rounded-xl shadow-lg text-sm md:text-base leading-relaxed w-max text-left space-y-1">
+    <div className="font-bold text-indigo-700">{skill.name}</div>
+    <div><span className="font-medium">Experience:</span> {skill.experience}</div>
+    <div><span className="font-medium">Projects:</span> {skill.projects}+</div>
+    <div><span className="font-medium">Proficiency:</span> {skill.proficiency}</div>
+  </div>
+</Html>
+
       )}
     </group>
   );

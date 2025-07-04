@@ -40,6 +40,11 @@ const HeroSection = () => {
       {/* Background Glow */}
       <div className="absolute w-[300px] h-[300px] bg-purple-700 rounded-full blur-3xl opacity-20 top-1/4 left-1/4 -z-10"></div>
 
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 md:bottom-[20%] z-20 text-white/60 text-sm flex flex-col items-center animate-fade-in-out pointer-events-none">
+  <div className="text-2xl">🖱️</div>
+  <div className="mt-1">Drag to rotate</div>
+</div>
+
       {/* === 3D MODEL ON TOP FOR MOBILE === */}
       <div className="w-full h-[310px] xs:h-[310px] sm:h-[350px] md:h-[500px] max-w-[1200px] z-10 mb-8 md:order-2">
         <Canvas camera={{ position: [0, 0, 7] }}>

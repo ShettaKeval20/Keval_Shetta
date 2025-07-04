@@ -77,6 +77,12 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[90%] h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-blue-500 blur-sm animate-pulse" />
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 z-10 relative">
+
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 md:bottom-[20%] z-20 text-white/60 text-sm flex flex-col items-center animate-fade-in-out pointer-events-none">
+  <div className="text-2xl">🖱️</div>
+  <div className="mt-1">Drag to rotate</div>
+</div>
+
         {/* Left - 3D Globe */}
         <div className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] flex-shrink-0">
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -102,7 +108,7 @@ export default function Footer() {
 
           <div className="flex justify-center md:justify-start gap-6 text-gray-400 text-2xl">
             <a
-              href="https://github.com/kevalshetta"
+              href="https://github.com/ShettaKeval20"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-transform hover:scale-110"
@@ -110,7 +116,7 @@ export default function Footer() {
               <FaGithub />
             </a>
             <a
-              href="https://linkedin.com/in/kevalshetta"
+              href="https://www.linkedin.com/in/kevalshetta/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-transform hover:scale-110"
@@ -124,6 +130,8 @@ export default function Footer() {
               <FaEnvelope />
             </a>
           </div>
+
+          
 
           <p className="text-xs text-gray-600 pt-4">
             © {new Date().getFullYear()} Keval Shetta · Built with React & Three.js

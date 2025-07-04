@@ -27,7 +27,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-indigo-400"
         >
-          💻 Projects That Define Me
+          💻 My Projects
         </motion.h2>
 
         <div className="flex flex-wrap justify-center gap-3 mb-10">
