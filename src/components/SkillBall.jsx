@@ -61,7 +61,7 @@ export default function SkillBall({ imgUrl, position, skill }) {
       </mesh>
 
       {/* Tooltip */}
-      {hovered && (
+      {/* {hovered && (
       <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
   <div className="bg-white text-black px-4 py-3 rounded-xl shadow-lg text-sm md:text-base leading-relaxed w-max text-left space-y-1">
     <div className="font-bold text-indigo-700">{skill.name}</div>
@@ -71,7 +71,7 @@ export default function SkillBall({ imgUrl, position, skill }) {
   </div>
 </Html>
 
-      )}
+      )} */}
     </group>
   );
 }

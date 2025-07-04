@@ -94,9 +94,9 @@ const generatePositions = () => {
       </h2>
 
         {/* 👇 New modern hover hint line */}
-  <p className="text-center text-sm md:text-base text-gray-400 mb-4 animate-fade-in">
-    Please hover on skill ball to explore my experience & proficiency.
-  </p>
+  {/* <p className="text-center text-sm md:text-base text-gray-400 mb-4 animate-fade-in">
+    (Please hover on skill ball to explore my experience & proficiency.)
+  </p> */}
   
       <Canvas camera={{ position: [0, 0, 12], fov: 60 }}>
         <ambientLight intensity={0.5} />
@@ -114,6 +114,12 @@ const generatePositions = () => {
 ))}
 
       </Canvas>
+
+              {/* Scroll Down Icon */}
+        <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+  <span className="material-icons text-3xl">expand_more</span>
+  <span className="text-xs mt-1">Scroll Down</span>
+</div>
     </section>
   );
 }

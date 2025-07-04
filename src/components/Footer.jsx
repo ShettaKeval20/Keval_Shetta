@@ -9,60 +9,22 @@ const toRad = (deg) => (deg * Math.PI) / 180;
 // 3D Earth with marker and popup
 function EarthModel() {
   const gltf = useGLTF("/models/earth.glb");
-  const [markerPosition, setMarkerPosition] = useState(null);
-
   const SCALE = 4.5;
-  const EARTH_RADIUS = 1.4 * SCALE;
   const EARTH_Y_OFFSET = -1.2;
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        const lat = toRad(coords.latitude);
-        const lng = toRad(coords.longitude);
-
-        const x = EARTH_RADIUS * Math.cos(lat) * Math.sin(lng);
-        const y = EARTH_RADIUS * Math.sin(lat) + EARTH_Y_OFFSET; // ✅ offset applied
-        const z = EARTH_RADIUS * Math.cos(lat) * Math.cos(lng);
-
-        setMarkerPosition([x, y, z]);
-      },
-      (err) => {
-        console.warn("Location error:", err.message);
-      }
-    );
-  }, []);
-
-  <mesh rotation={[Math.PI / 2, 0, 0]}>
-  <ringGeometry args={[1.5, 1.7, 64]} />
-  <meshBasicMaterial color="cyan" opacity={0.2} transparent />
-</mesh>
-
 
   return (
     <group>
       {/* Earth Model */}
       <primitive object={gltf.scene} scale={3.0} position={[0, EARTH_Y_OFFSET, 0]} />
 
-      {/* Marker + Popup*/}
-      {/* {markerPosition && (
-  <>
-    <mesh position={markerPosition}>
-      <sphereGeometry args={[0.07, 32, 32]} />
-      <meshStandardMaterial color="red" emissive="red" emissiveIntensity={0.7} />
-    </mesh>
-    <Html position={[markerPosition[0], markerPosition[1] + 0.2, markerPosition[2]]} center>
-      <div className="animate-bounce text-xs bg-white text-black px-2 py-1 rounded shadow">
-        You are here 🌍
-      </div>
-    </Html>
-  </>
-)} */}
-
+      {/* Optional Glow Ring */}
+      {/* <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, EARTH_Y_OFFSET - 0.1, 0]}>
+        <ringGeometry args={[1.5, 1.7, 64]} />
+        <meshBasicMaterial color="cyan" opacity={0.2} transparent />
+      </mesh> */}
     </group>
   );
 }
-
 
 useGLTF.preload("/models/earth.glb");
 
@@ -130,8 +92,6 @@ export default function Footer() {
               <FaEnvelope />
             </a>
           </div>
-
-          
 
           <p className="text-xs text-gray-600 pt-4">
             © {new Date().getFullYear()} Keval Shetta · Built with React & Three.js

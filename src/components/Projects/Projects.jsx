@@ -46,6 +46,8 @@ export default function Projects() {
           ))}
         </div>
 
+        
+
         {filteredProjects.length === 0 ? (
           <p className="text-center text-gray-400">No projects found.</p>
         ) : (
@@ -63,6 +65,12 @@ export default function Projects() {
           </div>
         )}
       </div>
+
+              {/* Scroll Down Icon */}
+        <div className="absolute bottom-26 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+  <span className="material-icons text-3xl">expand_more</span>
+  <span className="text-xs mt-1">Scroll Down</span>
+</div>
     </section>
   );
 }

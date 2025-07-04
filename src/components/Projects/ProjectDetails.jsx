@@ -162,22 +162,28 @@ export default function ProjectDetails() {
                   <h3 className="text-yellow-400 text-3xl font-bold mb-4 flex items-center gap-3">
                     <FaBrain /> What I Learned
                   </h3>
-                  <p className="text-gray-300">
-                    This project taught me scalable Firebase rules, secure OAuth flows, real-time sync, user feedback loops, and security testing.
-                  </p>
+                  <p className="text-gray-300">{project.whatILearned}</p>
+
                 </motion.div>
 
                 {/* Key Decisions */}
-                <motion.div custom={6} variants={containerVariants} className="bg-[#161b22]/70 p-8 rounded-3xl shadow-xl border border-purple-600">
-                  <h3 className="text-purple-400 text-3xl font-bold mb-4 flex items-center gap-3">
-                    <FaKey /> Key Decisions
-                  </h3>
-                  <ul className="list-disc pl-5 text-gray-300 space-y-2">
-                    <li>Realtime DB vs Firestore for faster sync.</li>
-                    <li>Google OAuth for frictionless sign-in.</li>
-                    <li>Retrofit for robust API calls.</li>
-                  </ul>
-                </motion.div>
+                {project.keyDecisions?.length > 0 && (
+  <motion.div
+    custom={6}
+    variants={containerVariants}
+    className="bg-[#161b22]/70 p-8 rounded-3xl shadow-xl border border-purple-600"
+  >
+    <h3 className="text-purple-400 text-3xl font-bold mb-4 flex items-center gap-3">
+      <FaKey /> Key Decisions
+    </h3>
+    <ul className="list-disc pl-5 text-gray-300 space-y-2">
+      {project.keyDecisions.map((decision, index) => (
+        <li key={index}>{decision}</li>
+      ))}
+    </ul>
+  </motion.div>
+)}
+
 
                 {/* Architecture */}
                 {/* <motion.div custom={7} variants={containerVariants} className="bg-[#161b22]/70 p-8 rounded-3xl shadow-xl border border-cyan-600">

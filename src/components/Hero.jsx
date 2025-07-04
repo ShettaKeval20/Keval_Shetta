@@ -3,6 +3,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { useProgress, Html } from "@react-three/drei";
+import ScrollDown from "./ScrollDown.jsx"; // ✅ Corrected path
+ // adjust path as needed
+
 
 
 // === 3D MODEL ===
@@ -114,10 +117,13 @@ const HeroSection = () => {
         </div>
 
         {/* Scroll Down Icon */}
-        <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+        {/* <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
   <span className="material-icons text-3xl">expand_more</span>
   <span className="text-xs mt-1">Scroll Down</span>
-</div>
+</div> */}
+
+{/* ✅ Working ScrollDown Button */}
+        <ScrollDown to="#about" />
 
         
       </div>
