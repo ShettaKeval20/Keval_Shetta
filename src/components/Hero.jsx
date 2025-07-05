@@ -113,7 +113,7 @@ const HeroSection = () => {
         <div className="flex gap-5 mt-4 text-sm text-gray-400">
           <a href="https://github.com/ShettaKeval20" target="_blank" className="hover:text-white transition">GitHub</a>
           <a href="mailto:kevalshetta@gmail.com" className="hover:text-white transition">Email</a>
-          <a href="https://www.kevalshetta.com" target="_blank" className="hover:text-white transition">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/kevalshetta/" target="_blank" className="hover:text-white transition">LinkedIn</a>
         </div>
 
         {/* Scroll Down Icon */}
