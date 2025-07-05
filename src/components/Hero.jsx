@@ -88,7 +88,7 @@ const HeroSection = () => {
           transition={{ delay: 0.4, duration: 0.7 }}
           className="text-sm sm:text-base md:text-xl text-gray-400 max-w-md"
         >
-          I build high-performance Android & full-stack web apps using React, Kotlin, and Firebase. 🚀 My code scales across real-world use cases and optimizes UX for 10K+ users.
+          I build high-performance Android & full-stack web apps using React, Kotlin, and Firebase. 🚀 My code scales across real-world use cases and optimizes UX for users.
         </motion.p>
 
         {/* CTA Buttons */}
