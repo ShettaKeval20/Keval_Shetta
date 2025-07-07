@@ -5,35 +5,34 @@ import SkillBall from "./SkillBall";
 
 // ✅ All skills list
 const skills = [
-  { name: "React", img: "/public/icons/React.png", experience: "2 years", projects: 10, proficiency: "Advanced", projectLink: "#projects-react" },
-  { name: "HTML5", img: "/public/icons/HTML5.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
-  { name: "CSS3", img: "/public/icons/CSS3.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
-  { name: "Javascript", img: "/public/icons/Javascript.webp", experience: "2.5 years", projects: 9, proficiency: "Advanced" },
+  { name: "React", img: "icons/React.png", experience: "2 years", projects: 10, proficiency: "Advanced", projectLink: "#projects-react" },
+  { name: "HTML5", img: "/icons/HTML5.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
+  { name: "CSS3", img: "/icons/CSS3.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
+  { name: "Javascript", img: "/icons/Javascript.webp", experience: "2.5 years", projects: 9, proficiency: "Advanced" },
 
   // Mobile Development
-  { name: "JAVA", img: "/public/icons/JAVA.svg", experience: "2 years", projects: 5, proficiency: "Intermediate" },
-  { name: "Kotlin", img: "/public/icons/Kotlin.png", experience: "1.5 years", projects: 4, proficiency: "Intermediate" },
-  { name: "Jetpack", img: "/public/icons/Jetpack.png", experience: "1.5 years", projects: 4, proficiency: "Intermediate" },
-  { name: "Swift", img: "/public/icons/Swift.png", experience: "1 year", projects: 2, proficiency: "Beginner" },
+  { name: "JAVA", img: "/icons/JAVA.svg", experience: "2 years", projects: 5, proficiency: "Intermediate" },
+  { name: "Kotlin", img: "/icons/Kotlin.png", experience: "1.5 years", projects: 4, proficiency: "Intermediate" },
+  { name: "Jetpack", img: "/icons/Jetpack.png", experience: "1.5 years", projects: 4, proficiency: "Intermediate" },
+  { name: "Swift", img: "/icons/Swift.png", experience: "1 year", projects: 2, proficiency: "Beginner" },
 
   // Backend
-  { name: "MySQL", img: "/public/icons/Mysql.png", experience: "2 years", projects: 6, proficiency: "Intermediate" },
-  { name: "Node.js", img: "/public/icons/Node.png", experience: "1 year", projects: 3, proficiency: "Intermediate" },
-  { name: "Firebase", img: "/public/icons/Firebase.png", experience: "2 years", projects: 5, proficiency: "Advanced" },
-  { name: "Python", img: "/public/icons/Python.png", experience: "3 years", projects: 8, proficiency: "Advanced" },
+  { name: "MySQL", img: "/icons/Mysql.png", experience: "2 years", projects: 6, proficiency: "Intermediate" },
+  { name: "Node.js", img: "/icons/Node.png", experience: "1 year", projects: 3, proficiency: "Intermediate" },
+  { name: "Firebase", img: "/icons/Firebase.png", experience: "2 years", projects: 5, proficiency: "Advanced" },
+  { name: "Python", img: "/icons/Python.png", experience: "3 years", projects: 8, proficiency: "Advanced" },
 
   // Design & DevOps
-  { name: "Figma", img: "/public/icons/Figma.png", experience: "2 years", projects: 7, proficiency: "Advanced" },
-  { name: "Adobe XD", img: "/public/icons/Adobe.png", experience: "1.5 years", projects: 4, proficiency: "Intermediate" },
-  { name: "Docker", img: "/public/icons/Docker.png", experience: "1 year", projects: 3, proficiency: "Beginner" },
-  { name: "Git", img: "/public/icons/Git.png", experience: "2 years", projects: 10, proficiency: "Advanced" },
+  { name: "Figma", img: "/icons/Figma.png", experience: "2 years", projects: 7, proficiency: "Advanced" },
+  { name: "Docker", img: "/icons/Docker.png", experience: "1 year", projects: 3, proficiency: "Beginner" },
+  { name: "Git", img: "/icons/Git.png", experience: "2 years", projects: 10, proficiency: "Advanced" },
 ];
 
 
 const getRowStructure = (width) => {
   if (width < 640) return [3, 3, 3, 3];     // Mobile
-  if (width < 1024) return [4, 4, 4];       // Tablet
-  return [7, 5, 4];                            // Laptop
+  if (width < 1024) return [6, 5, 4];       // Tablet
+  return [7, 5, 3];                            // Laptop
 };
 
 export default function Skills() {

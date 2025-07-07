@@ -21,7 +21,7 @@ export default function About() {
           className="flex justify-center"
         >
           <img
-            src="/about.jpeg" // Make sure this exists in the public folder
+            src="/icons/about.jpeg" // Make sure this exists in the public folder
             alt="Keval Shetta"
             className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 object-cover rounded-2xl shadow-2xl border border-white/10"
           />
