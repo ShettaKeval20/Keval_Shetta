@@ -123,7 +123,7 @@ const HeroSection = () => {
 </div> */}
 
 {/* ✅ Working ScrollDown Button */}
-        <ScrollDown to="#about" />
+        {/* <ScrollDown to="#about" /> */}
 
         
       </div>
