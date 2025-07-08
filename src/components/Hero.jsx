@@ -1,19 +1,18 @@
-// 
 import React, { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { motion } from "framer-motion";
-import useDeviceType from "../hooks/useDeviceType"; // path adjust if needed
+import { useProgress, Html } from "@react-three/drei";
+import ScrollDown from "./ScrollDown.jsx"; // ✅ Corrected path
+ // adjust path as needed
 
-// 3D Model Component
+
+
+// === 3D MODEL ===
 function GamingPCModel() {
-  const isMobile = useDeviceType();
+  const gltf = useGLTF("/models/gaming_pc.glb");
   const modelRef = useRef();
   const [hovered, setHovered] = useState(false);
-
-  const gltf = useGLTF(
-    isMobile ? "/models/gaming_pc_mobile.glb" : "/models/gaming_pc.glb"
-  );
 
   useFrame(() => {
     if (modelRef.current) {
@@ -35,9 +34,8 @@ function GamingPCModel() {
 }
 
 useGLTF.preload("/models/gaming_pc.glb");
-useGLTF.preload("/models/gaming_pc_mobile.glb");
 
-// Main Hero Section
+// === HERO SECTION ===
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start px-4 pt-10 md:pt-20 md:flex-row md:justify-between md:px-12 bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
@@ -45,13 +43,12 @@ const HeroSection = () => {
       {/* Background Glow */}
       <div className="absolute w-[300px] h-[300px] bg-purple-700 rounded-full blur-3xl opacity-20 top-1/4 left-1/4 -z-10"></div>
 
-      {/* Mouse Hint */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 md:bottom-[20%] z-20 text-white/60 text-sm flex flex-col items-center animate-fade-in-out pointer-events-none">
-        <div className="text-2xl">🖱️</div>
-        <div className="mt-1">Drag to rotate</div>
-      </div>
+  <div className="text-2xl">🖱️</div>
+  <div className="mt-1">Drag to rotate</div>
+</div>
 
-      {/* 3D Model */}
+      {/* === 3D MODEL ON TOP FOR MOBILE === */}
       <div className="w-full h-[310px] xs:h-[310px] sm:h-[350px] md:h-[500px] max-w-[1200px] z-10 mb-8 md:order-2">
         <Canvas camera={{ position: [0, 0, 7] }}>
           <ambientLight intensity={0.8} />
@@ -64,8 +61,9 @@ const HeroSection = () => {
         </Canvas>
       </div>
 
-      {/* Text Content */}
+      {/* === TEXT CONTENT === */}
       <div className="flex flex-col justify-center items-start space-y-5 w-full max-w-xl break-words z-20 md:mt-0">
+
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -117,6 +115,17 @@ const HeroSection = () => {
           <a href="mailto:kevalshetta@gmail.com" className="hover:text-white transition">Email</a>
           <a href="https://www.linkedin.com/in/kevalshetta/" target="_blank" className="hover:text-white transition">LinkedIn</a>
         </div>
+
+        {/* Scroll Down Icon */}
+        {/* <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+  <span className="material-icons text-3xl">expand_more</span>
+  <span className="text-xs mt-1">Scroll Down</span>
+</div> */}
+
+{/* ✅ Working ScrollDown Button */}
+        {/* <ScrollDown to="#about" /> */}
+
+        
       </div>
     </section>
   );
