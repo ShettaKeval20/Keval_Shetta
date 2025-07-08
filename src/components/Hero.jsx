@@ -100,7 +100,7 @@ const HeroSection = () => {
             🚀 Explore My Projects
           </a>
           <a
-            href="/public/resume/Keval_Shetta_Resume.pdf"
+            href="/resume/Keval_Shetta_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-500 text-gray-300 hover:bg-white/10 hover:text-white font-medium transition-all duration-300"
