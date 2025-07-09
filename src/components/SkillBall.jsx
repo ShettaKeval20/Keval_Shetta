@@ -1,17 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { Decal, Html } from "@react-three/drei";
 import * as THREE from "three";
+import { useNavigate } from "react-router-dom";
 
 const MOUSE_ROTATE_SPEED = 0.003;
 const RETURN_SPEED = 0.1;
+const TOOLTIP_DELAY = 3000; // Tooltip stays for 3 seconds
 
 export default function SkillBall({ imgUrl, position, skill }) {
   const meshRef = useRef();
   const texture = useLoader(TextureLoader, imgUrl);
   const [hovered, setHovered] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
+  let tooltipTimeout = useRef(null);
 
   useFrame(() => {
     const mesh = meshRef.current;
@@ -28,28 +33,50 @@ export default function SkillBall({ imgUrl, position, skill }) {
     }
   });
 
+  const handleClick = () => {
+    if (skill.projectLink && skill.projectLink !== "#") {
+      navigate(skill.projectLink);
+    }
+  };
+
+  // 🔁 Delay tooltip hide
+  useEffect(() => {
+    if (!hovered && showTooltip) {
+      tooltipTimeout.current = setTimeout(() => {
+        setShowTooltip(false);
+      }, TOOLTIP_DELAY);
+    }
+
+    return () => clearTimeout(tooltipTimeout.current);
+  }, [hovered]);
+
   return (
     <group>
       <mesh
         ref={meshRef}
         position={position}
         onPointerOver={(e) => {
+          clearTimeout(tooltipTimeout.current);
           setHovered(true);
+          setShowTooltip(true);
           e.stopPropagation();
         }}
-        onPointerOut={() => setHovered(false)}
+        onPointerOut={() => {
+          setHovered(false);
+        }}
         onPointerMove={(e) => {
           setMouse({ x: e.clientX, y: e.clientY });
         }}
+        onClick={handleClick}
         scale={hovered ? 1.15 : 1}
-        cursor="pointer"
+        cursor={skill.projectLink ? "pointer" : "default"}
       >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
           color="#ffffff"
           flatShading
-          emissive={hovered ? "#00ffff" : "#000000"}
-          emissiveIntensity={hovered ? 0.6 : 0}
+          emissive={hovered ? "#8b5cf6" : "#000000"}
+          emissiveIntensity={hovered ? 0.8 : 0}
         />
         <Decal
           map={texture}
@@ -60,18 +87,22 @@ export default function SkillBall({ imgUrl, position, skill }) {
         />
       </mesh>
 
-      {/* Tooltip */}
-      {/* {hovered && (
-      <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
-  <div className="bg-white text-black px-4 py-3 rounded-xl shadow-lg text-sm md:text-base leading-relaxed w-max text-left space-y-1">
-    <div className="font-bold text-indigo-700">{skill.name}</div>
-    <div><span className="font-medium">Experience:</span> {skill.experience}</div>
-    <div><span className="font-medium">Projects:</span> {skill.projects}+</div>
-    <div><span className="font-medium">Proficiency:</span> {skill.proficiency}</div>
-  </div>
-</Html>
-
-      )} */}
+      {/* Tooltip remains visible for a while after hover ends */}
+      {showTooltip && (
+        <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
+          <div className="bg-black text-white px-4 py-3 rounded-xl shadow-lg text-xs md:text-sm leading-relaxed w-max text-left space-y-1 border border-fuchsia-400">
+            <div className="font-bold text-fuchsia-400">{skill.name}</div>
+            <div><span className="text-gray-400">Experience:</span> {skill.experience}</div>
+            <div><span className="text-gray-400">Projects:</span> {skill.projects}+</div>
+            <div><span className="text-gray-400">Proficiency:</span> {skill.proficiency}</div>
+            {skill.projectLink && (
+              <div className="pt-1 text-blue-400 underline text-xs">
+                Click to view related project
+              </div>
+            )}
+          </div>
+        </Html>
+      )}
     </group>
   );
 }

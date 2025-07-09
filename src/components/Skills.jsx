@@ -28,6 +28,12 @@ const skills = [
   { name: "Git", img: "/icons/Git.png", experience: "2 years", projects: 10, proficiency: "Advanced" },
 ];
 
+const getBallScale = (width) => {
+  if (width < 640) return 0.65;   // Mobile
+  if (width < 1024) return 0.85;  // Tablet
+  return 1.0;                     // Desktop
+};
+
 
 const getRowStructure = (width) => {
   if (width < 640) return [3, 3, 3, 3];     // Mobile
@@ -37,10 +43,17 @@ const getRowStructure = (width) => {
 
 export default function Skills() {
   const [rows, setRows] = useState(getRowStructure(window.innerWidth));
+  const [scale, setScale] = useState(getBallScale(window.innerWidth));
+
 
   useEffect(() => {
     const handleResize = () => {
       setRows(getRowStructure(window.innerWidth));
+      const handleResize = () => {
+  setRows(getRowStructure(window.innerWidth));
+  setScale(getBallScale(window.innerWidth));
+};
+
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -108,6 +121,7 @@ const generatePositions = () => {
     imgUrl={skills[index].img}
     position={pos}
     skill={skills[index]}
+    scale={scale}
     showHintText={index === 0}
   />
 ))}

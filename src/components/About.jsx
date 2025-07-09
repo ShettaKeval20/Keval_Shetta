@@ -23,7 +23,7 @@ export default function About() {
           <img
             src="/icons/about.jpeg" // Make sure this exists in the public folder
             alt="Keval Shetta"
-            className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 object-cover rounded-2xl shadow-2xl border border-white/10"
+            className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 object-cover rounded-2xl shadow-2xl shadow-[0_0_40px_#8b5cf6] border border-white/10"
           />
         </motion.div>
 
@@ -44,9 +44,10 @@ export default function About() {
             I’m <span className="text-indigo-400 font-semibold">Keval Shetta</span>, a self-taught developer turning ideas into elegant code. From crafting Android apps in <span className="text-indigo-300">Kotlin</span> to building scalable full-stack apps with <span className="text-fuchsia-400">React</span> and <span className="text-purple-400">Firebase</span>, I enjoy solving real-world problems through clean code and modern design.
           </p>
 
-          <p className="text-gray-400 mt-4 text-xs sm:text-sm md:text-base">
-            I combine logic and aesthetics to build user-friendly digital experiences. Outside code, you’ll find me exploring new tech, sketching product flows, or reading.
-          </p>
+          <ul className="text-sm text-gray-400 mt-4 list-disc pl-5 space-y-2">
+            <li>🚀 Built apps that fight exam malpractice, track sleep, and deliver news — all in production use.</li>
+            <li>🧠 Constantly learning — from REST optimization to 3D skills with Three.js.</li>
+          </ul>
 
           {/* 🚀 Tech Tags */}
           <div className="mt-6 flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start">
