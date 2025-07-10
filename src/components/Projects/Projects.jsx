@@ -75,7 +75,79 @@ export default function Projects() {
   );
 }
 
+// function ProjectCard({ project }) {
+//   return (
+//     <Tilt
+//       glareEnable
+//       glareMaxOpacity={0.2}
+//       glareColor="#f0abfc"
+//       scale={1.02}
+//       transitionSpeed={1500}
+//       className="w-full"
+//     >
+//       <Link
+//         to={`/projects/${project.id}`}
+//         className="block bg-[#1e1b2e]/70 backdrop-blur-md border border-fuchsia-500/20 rounded-2xl p-5 transition-all shadow-[0_0_20px_#c084fc44] hover:shadow-[0_0_35px_#d946ef] group"
+//       >
+//         <div className="relative h-44 w-full rounded-xl overflow-hidden mb-4">
+//           <img
+//             src={project.image}
+//             alt={project.title}
+//             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+//           />
+//           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+//         </div>
+
+//         <h4 className="text-xl font-bold mb-1 text-white">{project.title}</h4>
+//         <p className="text-xs text-gray-400 mb-2">
+//           {project.year} • Team: {project.team}
+//         </p>
+//         <p className="text-sm text-gray-300 mb-4 line-clamp-3">
+//           {project.description}
+//         </p>
+
+//         <div className="flex flex-wrap gap-2 mb-4">
+//           {project.tech.map((tech, i) => (
+//             <span
+//               key={i}
+//               className="bg-purple-700/30 border border-purple-400/20 text-xs text-purple-100 px-3 py-1 rounded-full shadow-[0_0_8px_#c084fc33]"
+//             >
+//               {tech}
+//             </span>
+//           ))}
+//         </div>
+
+//         <div className="flex items-center justify-between text-sm text-purple-300">
+//           <span className="flex items-center gap-1 hover:text-fuchsia-400">
+//             <FaGithub /> GitHub
+//           </span>
+
+//           {project.video !== "#" && (
+//             <span className="flex items-center gap-1 hover:text-pink-400">
+//               <FaVideo /> Video
+//             </span>
+//           )}
+//         </div>
+
+//         <div className="text-right mt-4">
+//           <span className="text-xs text-fuchsia-400 hover:underline">
+//             View More →
+//           </span>
+//         </div>
+//       </Link>
+//     </Tilt>
+//   );
+// }
+
+import { useNavigate } from "react-router-dom";
+
 function ProjectCard({ project }) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/projects/${project.id}`);
+  };
+
   return (
     <Tilt
       glareEnable
@@ -86,8 +158,8 @@ function ProjectCard({ project }) {
       className="w-full"
     >
       <div
-        className="block bg-[#1e1b2e]/70 backdrop-blur-md border border-fuchsia-500/20 rounded-2xl p-5 transition-all shadow-[0_0_20px_#c084fc44] hover:shadow-[0_0_35px_#d946ef] group cursor-pointer"
-        onClick={() => window.location.href = `/projects/${project.id}`}
+        onClick={handleCardClick}
+        className="bg-[#1e1b2e]/70 backdrop-blur-md border border-fuchsia-500/20 rounded-2xl p-5 transition-all shadow-[0_0_20px_#c084fc44] hover:shadow-[0_0_35px_#d946ef] group cursor-pointer"
       >
         <div className="relative h-44 w-full rounded-xl overflow-hidden mb-4">
           <img
@@ -121,18 +193,18 @@ function ProjectCard({ project }) {
           <span
             className="flex items-center gap-1 hover:text-fuchsia-400"
             onClick={(e) => {
-              e.stopPropagation(); // ⛔ prevent card redirect
+              e.stopPropagation(); // ⛔ prevent card navigation
               window.open(project.github, "_blank");
             }}
           >
             <FaGithub /> GitHub
           </span>
 
-          {project.video && project.video !== "#" && (
+          {project.video !== "#" && (
             <span
               className="flex items-center gap-1 hover:text-pink-400"
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // ⛔ prevent card navigation
                 window.open(project.video, "_blank");
               }}
             >
@@ -142,13 +214,9 @@ function ProjectCard({ project }) {
         </div>
 
         <div className="text-right mt-4">
-          <Link
-            to={`/projects/${project.id}`}
-            onClick={(e) => e.stopPropagation()}
-            className="text-xs text-fuchsia-400 hover:underline"
-          >
+          <span className="text-xs text-fuchsia-400 hover:underline">
             View More →
-          </Link>
+          </span>
         </div>
       </div>
     </Tilt>
