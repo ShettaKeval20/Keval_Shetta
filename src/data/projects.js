@@ -57,7 +57,7 @@ const projects = [
   github: "https://github.com/ShettaKeval20/Buddiesgram",
   video: "https://drive.google.com/file/d/1ueRy9UO9MlYeLrOke3HIJq68cDjhKazE/view", // replace with your link
   year: "2023",
-  team: "Solo",
+  team: "Group (3 members)",
   members: [],
   category: "Android",
   tech: [
@@ -100,7 +100,7 @@ id: "inbriefs",
   video: "https://cln.sh/mhF0vGCH",
   demo: "",
   year: "2022",
-  team: "Group",
+  team: "Group (3 members)",
   members: ["Keval Shetta", "Teammate 1", "Teammate 2"],
   category: "React",
   tech: ["React Native", "Firebase", "RESTful APIs", "Postman"],
@@ -136,7 +136,7 @@ id: "inbriefs",
   video: "https://drive.google.com/file/d/1z4IB5oYpRTpmiFFp5WQHpJmnrEQukze3/view",
   demo: "",
   year: "2022",
-  team: "Solo",
+  team: "Group (3 members)",
   members: ["Keval Shetta"],
   category: "Android",
   tech: ["Kotlin", "Retrofit", "MVVM", "Room DB", "LiveData", "Google Calendar API"],
@@ -169,10 +169,10 @@ id: "inbriefs",
   detailedDescription:
     "The Weather Forecast App is an iOS application built using Swift, designed to fetch and display accurate and real-time meteorological data. It integrates weather APIs to ensure users receive up-to-date temperature, precipitation, and wind details. Focused on performance and responsiveness, the app tackles challenges around real-time data retrieval and latency, delivering fast and consistent forecasts for daily planning. The user interface is clean, modern, and optimized for clarity. Emphasis was placed on reliability and usability to improve daily decision-making for users.",
   github: "https://github.com/kevalpro/WeatherForecastApp", // update if needed
-  video: "", // add a walkthrough link if available
+  video: "https://drive.google.com/file/d/1rvGzGR6uDngpBJupnSLaRivaagnuA9Xl/view?usp=sharing", // add a walkthrough link if available
   demo: "",  // optional live TestFlight link or hosted demo
   year: "2022",
-  team: "Solo",
+  team: "Group (3 members)",
   members: ["Keval Shetta"],
   category: "iOS App",
   tech: ["Swift", "UIKit", "REST API", "JSON Parsing", "Xcode"],

@@ -7,48 +7,42 @@ import { useNavigate } from "react-router-dom";
 
 const MOUSE_ROTATE_SPEED = 0.003;
 const RETURN_SPEED = 0.1;
-const TOOLTIP_DELAY = 3000; // Tooltip stays for 3 seconds
+const TOOLTIP_DELAY = 3000;
 
-export default function SkillBall({ imgUrl, position, skill }) {
+export default function SkillBall({ imgUrl, position, skill, scale }) {
   const meshRef = useRef();
   const texture = useLoader(TextureLoader, imgUrl);
   const [hovered, setHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const tooltipTimeout = useRef(null);
   const navigate = useNavigate();
-  let tooltipTimeout = useRef(null);
 
   useFrame(() => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    if (hovered) {
-      const targetX = -mouse.y * MOUSE_ROTATE_SPEED;
-      const targetY = mouse.x * MOUSE_ROTATE_SPEED;
-      mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, targetX, RETURN_SPEED);
-      mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, targetY, RETURN_SPEED);
-    } else {
-      mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, 0, RETURN_SPEED);
-      mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, 0, RETURN_SPEED);
-    }
+    const targetX = hovered ? -mouse.y * MOUSE_ROTATE_SPEED : 0;
+    const targetY = hovered ? mouse.x * MOUSE_ROTATE_SPEED : 0;
+
+    mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, targetX, RETURN_SPEED);
+    mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, targetY, RETURN_SPEED);
   });
 
-  const handleClick = () => {
-    if (skill.projectLink && skill.projectLink !== "#") {
-      navigate(skill.projectLink);
-    }
-  };
-
-  // 🔁 Delay tooltip hide
   useEffect(() => {
     if (!hovered && showTooltip) {
       tooltipTimeout.current = setTimeout(() => {
         setShowTooltip(false);
       }, TOOLTIP_DELAY);
     }
-
     return () => clearTimeout(tooltipTimeout.current);
   }, [hovered]);
+
+  const handleClick = () => {
+    if (skill.projectLink && skill.projectLink !== "#") {
+      navigate(skill.projectLink);
+    }
+  };
 
   return (
     <group>
@@ -61,14 +55,10 @@ export default function SkillBall({ imgUrl, position, skill }) {
           setShowTooltip(true);
           e.stopPropagation();
         }}
-        onPointerOut={() => {
-          setHovered(false);
-        }}
-        onPointerMove={(e) => {
-          setMouse({ x: e.clientX, y: e.clientY });
-        }}
+        onPointerOut={() => setHovered(false)}
+        onPointerMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
         onClick={handleClick}
-        scale={hovered ? 1.15 : 1}
+        scale={hovered ? scale * 1.15 : scale}
         cursor={skill.projectLink ? "pointer" : "default"}
       >
         <icosahedronGeometry args={[1, 1]} />
@@ -78,16 +68,9 @@ export default function SkillBall({ imgUrl, position, skill }) {
           emissive={hovered ? "#8b5cf6" : "#000000"}
           emissiveIntensity={hovered ? 0.8 : 0}
         />
-        <Decal
-          map={texture}
-          position={[0, 0, 1]}
-          rotation={[0, 0, 0]}
-          scale={1.3}
-          flatShading
-        />
+        <Decal map={texture} position={[0, 0, 1]} rotation={[0, 0, 0]} scale={1.3} flatShading />
       </mesh>
 
-      {/* Tooltip remains visible for a while after hover ends */}
       {showTooltip && (
         <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
           <div className="bg-black text-white px-4 py-3 rounded-xl shadow-lg text-xs md:text-sm leading-relaxed w-max text-left space-y-1 border border-fuchsia-400">

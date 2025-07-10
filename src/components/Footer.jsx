@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           <p className="text-xs text-gray-600 pt-4">
-            © {new Date().getFullYear()} Keval Shetta · Built with React & Three.js · All Rights Reserved
+            © {new Date().getFullYear()} Keval Shetta · Built with React & Three.js + Vlite · All Rights Reserved
           </p>
         </div>
       </div>

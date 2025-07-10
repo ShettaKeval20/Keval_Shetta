@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import SkillBall from "./SkillBall";
 
-// ✅ All skills list
+// ✅ Skills List
 const skills = [
   { name: "React", img: "icons/React.png", experience: "2 years", projects: 10, proficiency: "Advanced", projectLink: "#projects-react" },
   { name: "HTML5", img: "/icons/HTML5.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
@@ -28,33 +28,29 @@ const skills = [
   { name: "Git", img: "/icons/Git.png", experience: "2 years", projects: 10, proficiency: "Advanced" },
 ];
 
+// 🔧 Helpers
 const getBallScale = (width) => {
-  if (width < 640) return 0.65;   // Mobile
-  if (width < 1024) return 0.85;  // Tablet
-  return 1.0;                     // Desktop
+  if (width < 640) return 0.65;
+  if (width < 1024) return 0.85;
+  return 1.0;
 };
 
-
 const getRowStructure = (width) => {
-  if (width < 640) return [3, 3, 3, 3];     // Mobile
-  if (width < 1024) return [6, 5, 4];       // Tablet
-  return [7, 5, 3];                            // Laptop
+  if (width < 640) return [3, 3, 3, 3]; // Mobile
+  if (width < 1024) return [6, 5, 4];   // Tablet
+  return [7, 5, 3];                     // Desktop
 };
 
 export default function Skills() {
   const [rows, setRows] = useState(getRowStructure(window.innerWidth));
   const [scale, setScale] = useState(getBallScale(window.innerWidth));
 
-
   useEffect(() => {
     const handleResize = () => {
       setRows(getRowStructure(window.innerWidth));
-      const handleResize = () => {
-  setRows(getRowStructure(window.innerWidth));
-  setScale(getBallScale(window.innerWidth));
-};
-
+      setScale(getBallScale(window.innerWidth));
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -62,77 +58,60 @@ export default function Skills() {
   const spacing = 2.5;
   const rowHeight = 2.5;
 
-const generatePositions = () => {
-  const positions = [];
-  let skillIndex = 0;
+  const generatePositions = () => {
+    const positions = [];
+    let skillIndex = 0;
 
-  const totalRows = rows.length;
-  const totalHeight = (totalRows - 1) * rowHeight;
+    const totalRows = rows.length;
+    const totalHeight = (totalRows - 1) * rowHeight;
 
-  // ✅ Responsive Y Offset
-  let yOffset = 0;
-  if (window.innerWidth < 640) {
-    yOffset = 2.5; // Mobile
-  } else if (window.innerWidth < 1024) {
-    yOffset = 1.5; // Tablet
-  } else {
-    yOffset = 0.5; // Laptop
-  }
+    const yOffset = window.innerWidth < 640 ? 2.5 : window.innerWidth < 1024 ? 1.5 : 0.5;
+    const startY = totalHeight / 2.5 + yOffset;
 
-  const startY = totalHeight / 2.5 + yOffset;
+    rows.forEach((itemsInRow, rowIndex) => {
+      const offsetX = ((itemsInRow - 1) * spacing) / 2;
+      const y = startY - rowIndex * rowHeight;
 
-  rows.forEach((itemsInRow, rowIndex) => {
-    const offsetX = ((itemsInRow - 1) * spacing) / 2;
-    const y = startY - rowIndex * rowHeight;
+      for (let i = 0; i < itemsInRow; i++) {
+        if (skillIndex >= skills.length) break;
+        const x = i * spacing - offsetX;
+        positions.push([x, y, 0]);
+        skillIndex++;
+      }
+    });
 
-    for (let i = 0; i < itemsInRow; i++) {
-      if (skillIndex >= skills.length) break;
-      const x = i * spacing - offsetX;
-      positions.push([x, y, 0]);
-      skillIndex++;
-    }
-  });
-
-  return positions;
-};
+    return positions;
+  };
 
   const positions = generatePositions();
 
   return (
-    <section id="skills" 
-    className="h-screen bg-[#0f172a] text-white">
-      <h2 className="text-center text-3xl font-bold py-2 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-indigo-400">
+    <section id="skills" className="relative h-screen bg-[#0f172a] text-white">
+      <h2 className="text-center text-3xl font-bold py-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-indigo-400">
         🚀 Tech Stack - 3D Universe
       </h2>
 
-        {/* 👇 New modern hover hint line */}
-  {/* <p className="text-center text-sm md:text-base text-gray-400 mb-4 animate-fade-in">
-    (Please hover on skill ball to explore my experience & proficiency.)
-  </p> */}
-  
       <Canvas camera={{ position: [0, 0, 12], fov: 60 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} />
         <Environment preset="sunset" />
 
         {positions.map((pos, index) => (
-  <SkillBall
-    key={index}
-    imgUrl={skills[index].img}
-    position={pos}
-    skill={skills[index]}
-    scale={scale}
-    showHintText={index === 0}
-  />
-))}
-
+          <SkillBall
+            key={index}
+            imgUrl={skills[index].img}
+            position={pos}
+            skill={skills[index]}
+            scale={scale}
+          />
+        ))}
       </Canvas>
 
-              {/* Scroll Down Icon */}
-        <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
-  <span className="material-icons text-3xl">expand_more</span>
-  <span className="text-xs mt-1">Scroll Down</span>
-</div>
+      {/* Scroll Down Indicator */}
+      <div className="absolute bottom-6 right-6 flex flex-col items-center text-white/60 z-30 animate-bounce">
+        <span className="material-icons text-3xl">expand_more</span>
+        <span className="text-xs mt-1">Scroll Down</span>
+      </div>
     </section>
   );
 }

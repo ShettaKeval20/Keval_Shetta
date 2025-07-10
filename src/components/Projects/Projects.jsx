@@ -85,9 +85,9 @@ function ProjectCard({ project }) {
       transitionSpeed={1500}
       className="w-full"
     >
-      <Link
-        to={`/projects/${project.id}`}
-        className="block bg-[#1e1b2e]/70 backdrop-blur-md border border-fuchsia-500/20 rounded-2xl p-5 transition-all shadow-[0_0_20px_#c084fc44] hover:shadow-[0_0_35px_#d946ef] group"
+      <div
+        className="block bg-[#1e1b2e]/70 backdrop-blur-md border border-fuchsia-500/20 rounded-2xl p-5 transition-all shadow-[0_0_20px_#c084fc44] hover:shadow-[0_0_35px_#d946ef] group cursor-pointer"
+        onClick={() => window.location.href = `/projects/${project.id}`}
       >
         <div className="relative h-44 w-full rounded-xl overflow-hidden mb-4">
           <img
@@ -118,23 +118,39 @@ function ProjectCard({ project }) {
         </div>
 
         <div className="flex items-center justify-between text-sm text-purple-300">
-          <span className="flex items-center gap-1 hover:text-fuchsia-400">
+          <span
+            className="flex items-center gap-1 hover:text-fuchsia-400"
+            onClick={(e) => {
+              e.stopPropagation(); // ⛔ prevent card redirect
+              window.open(project.github, "_blank");
+            }}
+          >
             <FaGithub /> GitHub
           </span>
 
-          {project.video !== "#" && (
-            <span className="flex items-center gap-1 hover:text-pink-400">
+          {project.video && project.video !== "#" && (
+            <span
+              className="flex items-center gap-1 hover:text-pink-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(project.video, "_blank");
+              }}
+            >
               <FaVideo /> Video
             </span>
           )}
         </div>
 
         <div className="text-right mt-4">
-          <span className="text-xs text-fuchsia-400 hover:underline">
+          <Link
+            to={`/projects/${project.id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="text-xs text-fuchsia-400 hover:underline"
+          >
             View More →
-          </span>
+          </Link>
         </div>
-      </Link>
+      </div>
     </Tilt>
   );
 }
