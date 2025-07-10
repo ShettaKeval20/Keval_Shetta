@@ -71,7 +71,7 @@ export default function SkillBall({ imgUrl, position, skill, scale }) {
         <Decal map={texture} position={[0, 0, 1]} rotation={[0, 0, 0]} scale={1.3} flatShading />
       </mesh>
 
-      {showTooltip && (
+      {/* {showTooltip && (
         <Html position={[...position.slice(0, 2), position[2] + 1.8]} center>
           <div className="bg-black text-white px-4 py-3 rounded-xl shadow-lg text-xs md:text-sm leading-relaxed w-max text-left space-y-1 border border-fuchsia-400">
             <div className="font-bold text-fuchsia-400">{skill.name}</div>
@@ -85,7 +85,7 @@ export default function SkillBall({ imgUrl, position, skill, scale }) {
             )}
           </div>
         </Html>
-      )}
+      )} */}
     </group>
   );
 }

@@ -5,7 +5,7 @@ import SkillBall from "./SkillBall";
 
 // ✅ Skills List
 const skills = [
-  { name: "React", img: "icons/React.png", experience: "2 years", projects: 10, proficiency: "Advanced", projectLink: "#projects-react" },
+  { name: "React", img: "icons/React.png", experience: "4 years", projects: 10, proficiency: "Advanced", projectLink: "#projects-react" },
   { name: "HTML5", img: "/icons/HTML5.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
   { name: "CSS3", img: "/icons/CSS3.png", experience: "3 years", projects: 12, proficiency: "Advanced" },
   { name: "Javascript", img: "/icons/Javascript.webp", experience: "2.5 years", projects: 9, proficiency: "Advanced" },
